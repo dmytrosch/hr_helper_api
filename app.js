@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import express from 'express'
-import { addEmployee, getEmployeeById, getList } from './handlers/employees.js'
+import { addEmployee, deleteEmployee, getEmployeeById, getEmployeesList, updateEmployee } from './handlers/employees.js'
 import db from './db.js'
 import { InvalidParamError, NotFoundError } from './errors.js'
 
@@ -11,9 +11,11 @@ const app = express()
 db.initDB()
 app.use(express.json());
 
-app.get('/employees', getList);
+app.get('/employees', getEmployeesList);
 app.get('/employees/:id', getEmployeeById)
-app.post('/employee', addEmployee);
+app.post('/employees', addEmployee);
+app.put('/employees/:id', updateEmployee)
+app.delete('/employees/:id', deleteEmployee)
 
 app.use((error, req, res, next) => {
   let status = 500

@@ -1,7 +1,6 @@
 import db from '../db.js'
-import { InvalidParamError, NotFoundError } from '../errors.js'
 
-export const getList = async (req, res, next) => {
+export const getEmployeesList = async (req, res, next) => {
   try {
     const rows = await db.getEmployeesList()
     res.json(rows);
@@ -12,27 +11,8 @@ export const getList = async (req, res, next) => {
 
 export const addEmployee = async (req, res, next) => {
   try {
-    const {
-      position,
-      project
-    } = req.body;
-
-    const positionResult = await db.getPositionByName(position)
-    if (!positionResult) {
-      throw new InvalidParamError('Position does not exist')
-    }
-
-    const projectResult = await db.getProjectByName(project)
-    if (!projectResult) {
-      throw new InvalidParamError('Project does not exist')
-    }
-
-    const employee = await db.addEmployee({
-      ...req.body,
-      positionId: positionResult.id,
-      projectId: projectResult.id
-    });
-    res.json(employee);
+    const employee = await db.addEmployee(req.body);
+    res.status(201).json(employee);
   } catch (error) {
     next(error)
   }
@@ -40,9 +20,30 @@ export const addEmployee = async (req, res, next) => {
 
 export const getEmployeeById = async (req, res, next) => {
   try {
-    const {id} = req.params
+    const { id } = req.params
     const employee = await db.getEmployeeById(id)
     res.json(employee)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const updateEmployee = async (req, res, next) => {
+  try {
+    const employeeId = req.params.id;
+    const updatedData = req.body
+    const result = await db.updateEmployee(employeeId, updatedData)
+    res.status(201).json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const deleteEmployee = async (req, res, next) => {
+  try {
+    const employeeId = req.params.id;
+    await db.deleteEmployee(employeeId)
+    res.status(204).end()
   } catch (error) {
     next(error)
   }
