@@ -4,6 +4,7 @@ import { addEmployee, deleteEmployee, getEmployeeById, getEmployeesList, updateE
 import db from './db.js'
 import { InvalidParamError, NotFoundError } from './errors.js'
 import { addProject, getProjectById, getProjectsList, updateProject } from './handlers/projects.js'
+import { getPositionsList, getPositionById, addPosition, updatePosition, deletePosition } from './handlers/positions.js'
 
 dotenv.config()
 
@@ -23,6 +24,13 @@ app.get(/projects/, getProjectsList)
 app.get('/projects/:id', getProjectById)
 app.post('/projects', addProject);
 app.patch('/projects/:id', updateProject)
+
+app.get('/positions', getPositionsList)
+app.get('/positions/:id', getPositionById)
+app.post('/positions', addPosition);
+app.patch('/positions/:id', updatePosition)
+app.delete('/positions/:id', deletePosition)
+
 
 
 
