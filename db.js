@@ -1,10 +1,10 @@
-import mysql from "mysql2/promise"; // Обратите внимание на использование mysql2/promise
+import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import { formatDate } from "./helpers.js";
 import { NotFoundError, InvalidParamError } from "./errors.js";
 import {
-  ACTIVE_PROJECTS_SELECTOR,
-  INACTIVE_PROJECTS_SELECTOR,
+  ACTIVE_PROJECTS_FILTER,
+  INACTIVE_PROJECTS_FILTER,
 } from "./constants.js";
 
 dotenv.config();
@@ -208,18 +208,18 @@ class MySQLDB {
     }
   }
 
-  async getProjectsList(selector) {
+  async getProjectsList(filter) {
     let selectProjectsSql = `
     SELECT id, name, contact_person, contact_email, is_active
     FROM projects
     `;
-    if (selector === ACTIVE_PROJECTS_SELECTOR) {
+    if (filter === ACTIVE_PROJECTS_FILTER) {
       selectProjectsSql = `
     SELECT id, name, contact_person, contact_email
     FROM projects
     WHERE is_active = 1`;
     }
-    if (selector === INACTIVE_PROJECTS_SELECTOR) {
+    if (filter === INACTIVE_PROJECTS_FILTER) {
       selectProjectsSql = `
     SELECT id, name, contact_person, contact_email
     FROM projects

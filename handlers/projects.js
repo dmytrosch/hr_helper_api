@@ -1,14 +1,14 @@
-import { ALLOWED_PROJECT_LIST_SELECTORS } from '../constants.js'
+import { ALLOWED_PROJECT_LIST_FILTERS } from '../constants.js'
 import db from '../db.js'
 import { NotFoundError } from '../errors.js'
 
 export const getProjectsList = async (req, res, next) => {
   try {
-    const { selector } = req.params
-    if (selector && !ALLOWED_PROJECT_LIST_SELECTORS.includes(selector)){
-      throw new NotFoundError(`Projects selector ${selector} is not allowed`)
+    const {filter} = req.query
+    if (filter && !ALLOWED_PROJECT_LIST_FILTERS.includes(filter)){
+      throw new NotFoundError(`Projects selector ${filter} is not allowed`)
     }
-    const rows = await db.getProjectsList(selector)
+    const rows = await db.getProjectsList(filter)
     res.json(rows);
   } catch (error) {
     next(error)

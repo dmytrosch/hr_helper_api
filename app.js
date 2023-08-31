@@ -19,8 +19,7 @@ app.post('/employees', addEmployee);
 app.patch('/employees/:id', updateEmployee)
 app.delete('/employees/:id', deleteEmployee)
 
-app.get('/projects/:selector', getProjectsList)
-app.get(/projects/, getProjectsList)
+app.get('/projects/', getProjectsList)
 app.get('/projects/:id', getProjectById)
 app.post('/projects', addProject);
 app.patch('/projects/:id', updateProject)
