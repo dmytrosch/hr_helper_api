@@ -3,6 +3,7 @@ import express from 'express'
 import { addEmployee, deleteEmployee, getEmployeeById, getEmployeesList, updateEmployee } from './handlers/employees.js'
 import db from './db.js'
 import { InvalidParamError, NotFoundError } from './errors.js'
+import { addProject, getProjectById, getProjectsList, updateProject } from './handlers/projects.js'
 
 dotenv.config()
 
@@ -14,8 +15,16 @@ app.use(express.json());
 app.get('/employees', getEmployeesList);
 app.get('/employees/:id', getEmployeeById)
 app.post('/employees', addEmployee);
-app.put('/employees/:id', updateEmployee)
+app.patch('/employees/:id', updateEmployee)
 app.delete('/employees/:id', deleteEmployee)
+
+app.get('/projects/:selector', getProjectsList)
+app.get(/projects/, getProjectsList)
+app.get('/projects/:id', getProjectById)
+app.post('/projects', addProject);
+app.patch('/projects/:id', updateProject)
+
+
 
 app.use((error, req, res, next) => {
   let status = 500
