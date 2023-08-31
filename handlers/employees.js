@@ -21,7 +21,7 @@ export const addEmployee = async (req, res, next) => {
 export const getEmployeeById = async (req, res, next) => {
   try {
     const { id } = req.params
-    const employee = await db.getEmployeeById(id)
+    const employee = await db.getPreparedEmployeeById(id)
     res.json(employee)
   } catch (error) {
     next(error)
