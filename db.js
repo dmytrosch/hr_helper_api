@@ -36,7 +36,7 @@ class MySQLDB {
 
   async getEmployeesList() {
     const employees = await this._executeSqlQuery(`
-      SELECT e.id, e.first_name, e.last_name, e.email, e.phone, e.city, e.birthday,
+    SELECT e.id, e.first_name, e.last_name, e.email, e.phone, e.city, e.birthday,
     e.join_date, 
     p.id AS position_id,
     p.position_name AS position_name, 
@@ -74,13 +74,13 @@ class MySQLDB {
     const [employee] = await this._executeSqlQuery(`
     SELECT * from employees e
     WHERE e.id = ${id}
-    `)
+    `);
 
     if (!employee) {
       throw new NotFoundError(`Employee ${id} does not exist`);
     }
 
-    return employee
+    return employee;
   }
 
   async getPreparedEmployeeById(id) {
@@ -194,11 +194,12 @@ class MySQLDB {
     const updatePositionsSql = `
     UPDATE positions
     SET head = null
-    WHERE head = ${id}`
+    WHERE head = ${id}`;
 
-    await this._executeSqlQuery(updatePositionsSql)
+    await this._executeSqlQuery(updatePositionsSql);
 
-    const deleteSql = `DELETE FROM employees
+    const deleteSql = 
+    `DELETE FROM employees
      WHERE id = ${id}`;
 
     try {
@@ -244,7 +245,7 @@ class MySQLDB {
       throw new NotFoundError(`Project ${id} does not exist`);
     }
 
-    return project
+    return project;
   }
 
   async getPreparedProjectById(id) {
@@ -376,8 +377,7 @@ class MySQLDB {
       throw new NotFoundError(`Position ${id} does not exist`);
     }
 
-    return position
-
+    return position;
   }
 
   async getPreparedPositionById(id) {
@@ -434,7 +434,7 @@ class MySQLDB {
   `;
     const { insertId } = await this._executeSqlQuery(insertPositionSql);
     if (head) {
-      await this.updateEmployee(head, { position: position_name });
+      await this.updateEmployee(head, { position: insertId });
     }
     return await this.getPreparedPositionById(insertId);
   }
@@ -465,7 +465,7 @@ class MySQLDB {
     await this._executeSqlQuery(updateProjectSql);
 
     if (head) {
-      await this.updateEmployee(head, { position: position_name });
+      await this.updateEmployee(head, { position: id });
     }
 
     return await this.getPreparedPositionById(id);

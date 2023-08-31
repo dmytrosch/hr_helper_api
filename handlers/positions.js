@@ -14,7 +14,6 @@ export const addPosition = async (req, res, next) => {
     const position = await db.addPosition(req.body);
     res.status(201).json(position);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
