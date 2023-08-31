@@ -22,7 +22,7 @@ export const addPosition = async (req, res, next) => {
 export const getPositionById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const position = await db.getPositionById(id);
+    const position = await db.getPreparedPositionById(id);
     res.json(position);
   } catch (error) {
     next(error);

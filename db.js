@@ -46,31 +46,31 @@ class MySQLDB {
     LEFT JOIN positions p ON e.position = p.id
     LEFT JOIN projects pr ON e.project = pr.id
   `);
-     return employees.map((employee) => ({
-    id: employee.id,
-    first_name: employee.first_name,
-    last_name: employee.last_name,
-    email: employee.email,
-    phone: employee.phone,
-    city: employee.city,
-    birthday: employee.birthday,
-    position: employee.position_id
-      ? {
-        position_id: employee.position_id,
-        position_name: employee.position_name,
-      }
-      : null,
-    project: employee.project_id
-      ? {
-        project_id: employee.project_id,
-        project_name: employee.project_name,
-      }
-      : null,
-    join_date: employee.join_date,
-  }));
+    return employees.map((employee) => ({
+      id: employee.id,
+      first_name: employee.first_name,
+      last_name: employee.last_name,
+      email: employee.email,
+      phone: employee.phone,
+      city: employee.city,
+      birthday: employee.birthday,
+      position: employee.position_id
+        ? {
+          position_id: employee.position_id,
+          position_name: employee.position_name,
+        }
+        : null,
+      project: employee.project_id
+        ? {
+          project_id: employee.project_id,
+          project_name: employee.project_name,
+        }
+        : null,
+      join_date: employee.join_date,
+    }));
   }
 
-  async _getEmployeeById(id){
+  async _getEmployeeById(id) {
     const [employee] = await this._executeSqlQuery(`
     SELECT * from employees e
     WHERE e.id = ${id}
@@ -136,10 +136,10 @@ class MySQLDB {
       project = null,
     } = employeeData;
     if (position) {
-      await this.getPositionById(position);
+      await this._getPositionById(position);
     }
     if (project) {
-      await this.getProjectById(project);
+      await this._getProjectById(project);
     }
 
     const insertEmployeeSql = `
@@ -162,17 +162,17 @@ class MySQLDB {
     const { position, project } = updatedData;
 
     if (position) {
-      await this.getPositionById(position);
+      await this._getPositionById(position);
     }
     if (project) {
-      await this.getProjectById(project);
+      await this._getProjectById(project);
     }
 
     const proceedData = {
       ...employee,
       ...updatedData,
     };
-    
+
     const updateSql = `
       UPDATE employees
       SET first_name = '${proceedData.first_name}',
@@ -191,6 +191,13 @@ class MySQLDB {
   }
 
   async deleteEmployee(id) {
+    const updatePositionsSql = `
+    UPDATE positions
+    SET head = null
+    WHERE head = ${id}`
+
+    await this._executeSqlQuery(updatePositionsSql)
+
     const deleteSql = `DELETE FROM employees
      WHERE id = ${id}`;
 
@@ -228,7 +235,19 @@ class MySQLDB {
     });
   }
 
-  async getProjectById(id) {
+  async _getProjectById(id) {
+    const [project] = await this._executeSqlQuery(`
+      SELECT * FROM projects
+      WHERE id = ${id}
+  `);
+    if (!project) {
+      throw new NotFoundError(`Project ${id} does not exist`);
+    }
+
+    return project
+  }
+
+  async getPreparedProjectById(id) {
     const projectWithEmployees = await this._executeSqlQuery(`
       SELECT p.id AS project_id, p.name AS project_name, p.contact_person, p.contact_email,
            p.is_active,
@@ -281,11 +300,11 @@ class MySQLDB {
   `;
     const { insertId } = await this._executeSqlQuery(insertProjectSql);
 
-    return await this.getProjectById(insertId);
+    return await this.getPreparedProjectById(insertId);
   }
 
   async updateProject(id, updatedData) {
-    const project = await this.getProjectById(id);
+    const project = await this._getProjectById(id);
 
     const proceedData = {
       ...project,
@@ -311,7 +330,7 @@ class MySQLDB {
     }
 
     await this._executeSqlQuery(updateProjectSql);
-    return await this.getProjectById(id);
+    return await this.getPreparedProjectById(id);
   }
 
   async getPositionsList() {
@@ -347,7 +366,21 @@ class MySQLDB {
     }));
   }
 
-  async getPositionById(id) {
+  async _getPositionById(id) {
+    const [position] = await this._executeSqlQuery(`
+    SELECT * FROM positions p
+    WHERE p.id = ${id}
+    `);
+
+    if (!position) {
+      throw new NotFoundError(`Position ${id} does not exist`);
+    }
+
+    return position
+
+  }
+
+  async getPreparedPositionById(id) {
     const selectPositionSql = `
     SELECT
       p.id,
@@ -392,7 +425,7 @@ class MySQLDB {
     }
 
     if (head) {
-      await this.getEmployeeById(head);
+      await this._getEmployeeById(head);
     }
 
     const insertPositionSql = `
@@ -403,16 +436,16 @@ class MySQLDB {
     if (head) {
       await this.updateEmployee(head, { position: position_name });
     }
-    return await this.getPositionById(insertId);
+    return await this.getPreparedPositionById(insertId);
   }
 
   async updatePosition(id, updatedData) {
-    const position = await this.getPositionById(id);
+    const position = await this._getPositionById(id);
 
     const { head } = updatedData;
 
     if (head) {
-      await this.getEmployeeById(head);
+      await this._getEmployeeById(head);
     }
 
     const proceedData = {
@@ -435,7 +468,7 @@ class MySQLDB {
       await this.updateEmployee(head, { position: position_name });
     }
 
-    return await this.getPositionById(id);
+    return await this.getPreparedPositionById(id);
   }
 
   async deletePosition(id) {

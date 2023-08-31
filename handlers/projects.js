@@ -27,7 +27,7 @@ export const addProject = async (req, res, next) => {
 export const getProjectById = async (req, res, next) => {
   try {
     const { id } = req.params
-    const project = await db.getProjectById(id)
+    const project = await db.getPreparedProjectById(id)
     res.json(project)
   } catch (error) {
     next(error)
