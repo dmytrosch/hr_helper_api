@@ -24,9 +24,9 @@ class MySQLDB {
     console.log("connected to DB");
   }
 
-  async _executeSqlQuery(sql) {
+  async _executeSqlQuery(sql, values) {
     try {
-      const [rows] = await this.pool.query(sql);
+      const [rows] = await this.pool.query(sql, values);
       return rows;
     } catch (error) {
       console.error("Error executing query:", error);
@@ -432,9 +432,11 @@ class MySQLDB {
 
     const insertPositionSql = `
     INSERT INTO positions (position_name, salary_limit, head)
-    VALUES ('${position_name}', '${salary_limit}', '${head}')
+    VALUES (?, ?, ?)
   `;
-    const { insertId } = await this._executeSqlQuery(insertPositionSql);
+    const values = [position_name, salary_limit, head];
+    const { insertId } = await this._executeSqlQuery(insertPositionSql, values);
+
     if (head) {
       await this.updateEmployee(head, { position: insertId });
     }
