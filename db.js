@@ -191,6 +191,8 @@ class MySQLDB {
   }
 
   async deleteEmployee(id) {
+    await this._getEmployeeById(id)
+
     const updatePositionsSql = `
     UPDATE positions
     SET head = null
@@ -198,7 +200,7 @@ class MySQLDB {
 
     await this._executeSqlQuery(updatePositionsSql);
 
-    const deleteSql = 
+    const deleteSql =
     `DELETE FROM employees
      WHERE id = ${id}`;
 
@@ -472,6 +474,8 @@ class MySQLDB {
   }
 
   async deletePosition(id) {
+    await this._getPositionById(id)
+
     const updateEmployeesSql = `
     UPDATE employees
     SET position = null
