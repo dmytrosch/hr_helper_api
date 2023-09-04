@@ -1,7 +1,8 @@
 # hr_helper_api
 
 MySQL DB Schema:
-![Screenshot from 2023-08-28 17-09-30](https://github.com/dmytrosch/hr_helper_api/assets/61431597/623ae323-3b47-4ba8-9a71-639cafcc1eeb)
+![Screenshot from 2023-08-31 17-05-48](https://github.com/dmytrosch/hr_helper_api/assets/61431597/66031d5a-98a5-466e-808e-1b3597f47e70)
+
 
 Emplyees table schema:
 ![Screenshot from 2023-08-31 17-39-46](https://github.com/dmytrosch/hr_helper_api/assets/61431597/f3c9d747-be22-421a-9b9c-5e75ec660d5e)
