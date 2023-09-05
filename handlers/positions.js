@@ -1,4 +1,4 @@
-import db from '../db.js';
+import db from '../services/positions.js';
 
 export const getPositionsList = async (req, res, next) => {
   try {

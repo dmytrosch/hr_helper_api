@@ -1,4 +1,4 @@
-import db from '../db.js'
+import db from '../services/employees.js'
 
 export const getEmployeesList = async (req, res, next) => {
   try {

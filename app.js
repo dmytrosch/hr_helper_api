@@ -1,34 +1,21 @@
 import dotenv from 'dotenv'
 import express from 'express'
-import { addEmployee, deleteEmployee, getEmployeeById, getEmployeesList, updateEmployee } from './handlers/employees.js'
 import db from './db.js'
 import { InvalidParamError, NotFoundError } from './errors.js'
-import { addProject, getProjectById, getProjectsList, updateProject } from './handlers/projects.js'
-import { getPositionsList, getPositionById, addPosition, updatePosition, deletePosition } from './handlers/positions.js'
+import employeesRouter from './routes/employees.js'
+import projectsRouter from './routes/projects.js'
+import positionsRouter from './routes/positions.js'
 
 dotenv.config()
 
-
 const app = express()
-db.initDB()
 app.use(express.json());
 
-app.get('/employees', getEmployeesList);
-app.get('/employees/:id', getEmployeeById)
-app.post('/employees', addEmployee);
-app.patch('/employees/:id', updateEmployee)
-app.delete('/employees/:id', deleteEmployee)
+db.initDB()
 
-app.get('/projects/', getProjectsList)
-app.get('/projects/:id', getProjectById)
-app.post('/projects', addProject);
-app.patch('/projects/:id', updateProject)
-
-app.get('/positions', getPositionsList)
-app.get('/positions/:id', getPositionById)
-app.post('/positions', addPosition);
-app.patch('/positions/:id', updatePosition)
-app.delete('/positions/:id', deletePosition)
+app.use('/employees', employeesRouter)
+app.use('/projects', projectsRouter)
+app.use('/positions', positionsRouter)
 
 
 

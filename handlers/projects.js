@@ -1,5 +1,5 @@
 import { ALLOWED_PROJECT_LIST_FILTERS } from '../constants.js'
-import db from '../db.js'
+import db from '../services/projects.js'
 import { NotFoundError } from '../errors.js'
 
 export const getProjectsList = async (req, res, next) => {
