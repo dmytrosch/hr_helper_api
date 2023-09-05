@@ -1,4 +1,7 @@
-import { ACTIVE_PROJECTS_FILTER, INACTIVE_PROJECTS_FILTER } from "../constants.js";
+import {
+  ACTIVE_PROJECTS_FILTER,
+  INACTIVE_PROJECTS_FILTER,
+} from "../constants.js";
 import db from "../db.js";
 import { NotFoundError, InvalidParamError } from "../errors.js";
 
@@ -30,7 +33,7 @@ class ProjectsServices {
     });
   }
 
-  async getProjectById(id) {
+  async getProjectByIdOrFail(id) {
     const [project] = await db.executeSqlQuery(`
       SELECT * FROM projects
       WHERE id = ${id}
@@ -99,7 +102,7 @@ class ProjectsServices {
   }
 
   async updateProject(id, updatedData) {
-    const project = await this.getProjectById(id);
+    const project = await this.getProjectByIdOrFail(id);
 
     const proceedData = {
       ...project,

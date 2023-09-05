@@ -41,7 +41,7 @@ class EmployeesServices {
     }));
   }
 
-  async getEmployeeById(id) {
+  async getEmployeeByIdOrFail(id) {
     const [employee] = await db.executeSqlQuery(`
     SELECT * from employees e
     WHERE e.id = ${id}
@@ -107,10 +107,10 @@ class EmployeesServices {
       project = null,
     } = employeeData;
     if (position) {
-      await positionsServices.getPositionById(position);
+      await positionsServices.getPositionByIdOrFail(position);
     }
     if (project) {
-      await projectsServices.getProjectById(project);
+      await projectsServices.getProjectByIdOrFail(project);
     }
 
     const insertEmployeeSql = `
@@ -128,15 +128,15 @@ class EmployeesServices {
   }
 
   async updateEmployee(id, updatedData) {
-    const employee = await this.getEmployeeById(id);
+    const employee = await this.getEmployeeByIdOrFail(id);
 
     const { position, project } = updatedData;
 
     if (position) {
-      await positionsServices.getPositionById(position);
+      await positionsServices.getPositionByIdOrFail(position);
     }
     if (project) {
-      await projectsServices.getProjectById(project);
+      await projectsServices.getProjectByIdOrFail(project);
     }
 
     const proceedData = {
@@ -162,7 +162,7 @@ class EmployeesServices {
   }
 
   async deleteEmployee(id) {
-    await this.getEmployeeById(id);
+    await this.getEmployeeByIdOrFail(id);
 
     const updatePositionsSql = `
     UPDATE positions

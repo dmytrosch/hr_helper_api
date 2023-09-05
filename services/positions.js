@@ -36,7 +36,7 @@ class PositionsServices {
     }));
   }
 
-  async getPositionById(id) {
+  async getPositionByIdOrFail(id) {
     const [position] = await db.executeSqlQuery(`
     SELECT * FROM positions p
     WHERE p.id = ${id}
@@ -94,7 +94,7 @@ class PositionsServices {
     }
 
     if (head) {
-      await employeesServices.getEmployeeById(head);
+      await employeesServices.getEmployeeByIdOrFail(head);
     }
 
     const insertPositionSql = `
@@ -111,12 +111,12 @@ class PositionsServices {
   }
 
   async updatePosition(id, updatedData) {
-    const position = await this.getPositionById(id);
+    const position = await this.getPositionByIdOrFail(id);
 
     const { head } = updatedData;
 
     if (head) {
-      await employeesServices.getEmployeeById(head);
+      await employeesServices.getEmployeeByIdOrFail(head);
     }
 
     const proceedData = {
@@ -143,7 +143,7 @@ class PositionsServices {
   }
 
   async deletePosition(id) {
-    await this.getPositionById(id);
+    await this.getPositionByIdOrFail(id);
 
     const updateEmployeesSql = `
     UPDATE employees
