@@ -1,0 +1,353 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "HR_helper",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "servers": [
+    {
+      "url": "https://hr-helper.onrender.com"
+    }
+  ],
+  "paths": {
+    "/employees": {
+      "get": {
+        "summary": "GET EMPLOYEES LIST",
+        "description": "GET EMPLOYEES LIST",
+        "operationId": "getEmployeesList",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "summary": "ADD EMPLOYEE",
+        "description": "ADD EMPLOYEE",
+        "operationId": "addEmployee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "birthday": {
+                    "type": "string",
+                    "example": "1989-12-21"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Ottawa"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "k.m@corp-mail.com"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "example": "Kasandra"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "example": "Marry"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "+5185455569"
+                  },
+                  "position": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "project": {
+                    "type": "number",
+                    "example": 5
+                  }
+                }
+              },
+              "example": {
+                "birthday": "1989-12-21",
+                "city": "Ottawa",
+                "email": "k.m@corp-mail.com",
+                "first_name": "Kasandra",
+                "last_name": "Marry",
+                "phone": "+5185455569",
+                "position": 1,
+                "project": 5
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/employees/13": {
+      "get": {
+        "summary": "GET EMPLOYEE BY ID",
+        "description": "GET EMPLOYEE BY ID",
+        "operationId": "getEmployeeById",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/employees/33": {
+      "patch": {
+        "summary": "UPDATE EMPLOYEE",
+        "description": "UPDATE EMPLOYEE",
+        "operationId": "updateEmployee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "position": {
+                    "type": "number",
+                    "example": 4
+                  }
+                }
+              },
+              "example": {
+                "position": 4
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/employees/25": {
+      "delete": {
+        "summary": "DELETE EMPLOYEE",
+        "description": "DELETE EMPLOYEE",
+        "operationId": "deleteEmployee",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/projects/5": {
+      "get": {
+        "summary": "GET PROJECT BY ID",
+        "description": "GET PROJECT BY ID",
+        "operationId": "getProjectById",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "summary": "GET ALL PROJECTS LIST",
+        "description": "GET ALL PROJECTS LIST",
+        "operationId": "getAllProjectsList",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "summary": "ADD PROJECT",
+        "description": "ADD PROJECT",
+        "operationId": "addProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contact_email": {
+                    "type": "string",
+                    "example": "t.dunkan@voltage.com"
+                  },
+                  "contact_person": {
+                    "type": "string",
+                    "example": "Tanisha Duncan"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Voltage"
+                  }
+                }
+              },
+              "example": {
+                "contact_email": "t.dunkan@voltage.com",
+                "contact_person": "Tanisha Duncan",
+                "name": "Voltage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/projects/2": {
+      "patch": {
+        "summary": "UPDATE PROJECT",
+        "description": "UPDATE PROJECT",
+        "operationId": "updateProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "is_active": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "example": {
+                "is_active": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/positions": {
+      "get": {
+        "summary": "GET POSITIONS LIST",
+        "description": "GET POSITIONS LIST",
+        "operationId": "getPositionsList",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "summary": "ADD POSITION",
+        "description": "ADD POSITION",
+        "operationId": "addPosition",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "head": {
+                    "type": "number",
+                    "example": 21
+                  },
+                  "position_name": {
+                    "type": "string",
+                    "example": "TO DELETE"
+                  },
+                  "salary_limit": {
+                    "type": "number",
+                    "example": 144444
+                  }
+                }
+              },
+              "example": {
+                "head": 21,
+                "position_name": "TO DELETE",
+                "salary_limit": 144444
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/positions/2": {
+      "get": {
+        "summary": "GET POSITION BY ID",
+        "description": "GET POSITION BY ID",
+        "operationId": "getPositionById",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/positions/5": {
+      "patch": {
+        "summary": "UPDATE POSITION",
+        "description": "UPDATE POSITION",
+        "operationId": "updatePosition",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "head": {
+                    "type": "number",
+                    "example": 11
+                  },
+                  "position_name": {
+                    "type": "string",
+                    "example": "Business Analyst"
+                  }
+                }
+              },
+              "example": {
+                "head": 11,
+                "position_name": "Business Analyst"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/positions/7": {
+      "delete": {
+        "summary": "DELETE POSITION",
+        "description": "DELETE POSITION",
+        "operationId": "deletePosition",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
