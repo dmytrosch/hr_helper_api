@@ -42,6 +42,6 @@ type Query {
   employees: [Employee!]
   employee(id: ID!): Employee
 
-  projects(filter: String): [Project!]
+  projects(filter: ProjectFilters): [Project!]
   project(id: ID!): Project
 }

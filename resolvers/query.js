@@ -1,3 +1,4 @@
+import { ACTIVE_PROJECTS_FILTER } from "../constants.js";
 import { prepareIntegerId } from "../helpers.js";
 
 const Query = {
@@ -23,8 +24,12 @@ const Query = {
     });
   },
 
-  projects: async (_, __, context) => {
-    return await context.prisma.project.findMany()
+  projects: async (_, { filter = null }, context) => {
+    const query = {}
+    if (filter) {
+      query.isActive = filter === ACTIVE_PROJECTS_FILTER
+    }
+    return await context.prisma.project.findMany({where: query})
   },
   project: async (_, { id }, context) => {
     return await context.prisma.project.findUnique({
