@@ -26,7 +26,8 @@ type Project {
   name: String
   contact_person: String
   contact_email: String
-  is_active: Boolean
+  isActive: Boolean
+  employees: [Employee]
 }
 
 enum ProjectFilters {
@@ -43,5 +44,4 @@ type Query {
 
   projects(filter: String): [Project!]
   project(id: ID!): Project
-
 }

@@ -19,9 +19,20 @@ const Query = {
     return await context.prisma.employee.findUnique({
       where: {
         id: prepareIntegerId(id),
-      }, 
+      },
     });
   },
+
+  projects: async (_, __, context) => {
+    return await context.prisma.project.findMany()
+  },
+  project: async (_, { id }, context) => {
+    return await context.prisma.project.findUnique({
+      where: {
+        id: prepareIntegerId(id)
+      }
+    })
+  }
 };
 
 export default Query;
