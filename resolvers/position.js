@@ -1,5 +1,5 @@
 const Position = {
-  total_employees: async (parent, args, context) => {
+  total_employees: async (parent, _, context) => {
     const count = await context.prisma.employee.count({
       where: {
         positionId: parent.id,
@@ -8,7 +8,7 @@ const Position = {
 
     return count;
   },
-  head: async (parent, args, context) => {
+  head: async (parent, _, context) => {
     const head = await context.prisma.position
       .findUnique({
         where: {
@@ -18,7 +18,7 @@ const Position = {
       .head();
     return head
   },
-  employees: async (parent, args, context) => {
+  employees: async (parent, _, context) => {
     return await context.prisma.employee.findMany({
       where: {
         positionId: parent.id,

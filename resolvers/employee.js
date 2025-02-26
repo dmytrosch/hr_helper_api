@@ -1,5 +1,5 @@
 const Employee = {
-  headOfPositions: async (parent, args, context) => {
+  headOfPositions: async (parent, _, context) => {
     return await context.prisma.employee
       .findUnique({
         where: {
@@ -8,7 +8,7 @@ const Employee = {
       })
       .headOfPositions();
   },
-  project: async (parent, args, context) => {
+  project: async (parent, _, context) => {
     return await context.prisma.employee
       .findUnique({
         where: {
@@ -17,7 +17,7 @@ const Employee = {
       })
       .project();
   },
-  position: async (parent, args, context) => {
+  position: async (parent, _, context) => {
     return await context.prisma.employee
       .findUnique({
         where: {
