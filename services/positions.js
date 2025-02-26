@@ -27,10 +27,10 @@ class PositionsServices {
       salary_limit: p.salary_limit,
       head: p.head
         ? {
-            employee_id: p.employee_id,
-            employee_first_name: p.employee_first_name,
-            employee_last_name: p.employee_last_name,
-          }
+          employee_id: p.employee_id,
+          employee_first_name: p.employee_first_name,
+          employee_last_name: p.employee_last_name,
+        }
         : null,
       total_employees: p.total_employees,
     }));
@@ -77,10 +77,10 @@ class PositionsServices {
       salary_limit: position.salary_limit,
       head: position.head
         ? {
-            employee_id: position.employee_id,
-            employee_first_name: position.employee_first_name,
-            employee_last_name: position.employee_last_name,
-          }
+          employee_id: position.employee_id,
+          employee_first_name: position.employee_first_name,
+          employee_last_name: position.employee_last_name,
+        }
         : null,
       total_employees: position.total_employees,
     };
@@ -104,9 +104,6 @@ class PositionsServices {
     const values = [position_name, salary_limit, head];
     const { insertId } = await db.executeSqlQuery(insertPositionSql, values);
 
-    if (head) {
-      await employeesServices.updateEmployee(head, { position: insertId });
-    }
     return await this.getPreparedPositionById(insertId);
   }
 
@@ -135,10 +132,6 @@ class PositionsServices {
   `;
     await db.executeSqlQuery(updateProjectSql);
 
-    if (head) {
-      await employeesServices.updateEmployee(head, { position: id });
-    }
-
     return await this.getPreparedPositionById(id);
   }
 
@@ -147,7 +140,7 @@ class PositionsServices {
 
     const updateEmployeesSql = `
     UPDATE employees
-    SET position = null
+      SET position = null
     WHERE position = ${id}
   `;
 
