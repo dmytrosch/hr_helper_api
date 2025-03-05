@@ -15,6 +15,7 @@ async function startApolloServer(app) {
     context: {
       prisma,
     },
+    introspection: true,
     plugins: [ApolloServerPluginLandingPageLocalDefault]
   });
 
