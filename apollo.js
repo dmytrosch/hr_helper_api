@@ -1,4 +1,5 @@
 import { ApolloServer } from "apollo-server-express";
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
@@ -14,6 +15,7 @@ async function startApolloServer(app) {
     context: {
       prisma,
     },
+    plugins: [ApolloServerPluginLandingPageLocalDefault]
   });
 
   await server.start();
