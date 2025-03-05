@@ -7,6 +7,12 @@ type Position {
   employees: [Employee]
 }
 
+input PositionPayload {
+  position_name: String
+  salary_limit: Int
+  head: ID
+}
+
 type Employee {
   id: ID
   first_name: String
@@ -44,4 +50,10 @@ type Query {
 
   projects(filter: ProjectFilters): [Project!]
   project(id: ID!): Project
+}
+
+type Mutation {
+  addPosition(position_name: String!, salary_limit: Int!, head: ID): Position!
+  updatePosition(id: ID!, updatedData: PositionPayload): Position!
+  deletePosition(id: ID!): Boolean!
 }

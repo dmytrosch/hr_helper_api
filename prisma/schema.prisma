@@ -30,7 +30,7 @@ model Employee {
 }
 
 model Position {
-  id            Int     @id
+  id            Int     @id @default(autoincrement())
   position_name String  @db.VarChar(45)
   salary_limit  Int     @default(4000)
   headId        Int?    @map("head")
