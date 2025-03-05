@@ -2,7 +2,9 @@ import { prepareIntegerId } from "../../helpers.js";
 
 const positionMutations = {
   addPosition: async (_, args, context) => {
-    const { position_name, head, salary_limit } = args;
+    const {
+      position: { position_name, head, salary_limit },
+    } = args;
 
     const position = await context.prisma.position.create({
       data: {
@@ -42,4 +44,4 @@ const positionMutations = {
   },
 };
 
-export default positionMutations
+export default positionMutations;

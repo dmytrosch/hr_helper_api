@@ -7,9 +7,15 @@ type Position {
   employees: [Employee]
 }
 
-input PositionPayload {
+input PositionUpdatingPayload {
   position_name: String
   salary_limit: Int
+  head: ID
+}
+
+input PositionCreationPayload {
+  position_name: String!
+  salary_limit: Int!
   head: ID
 }
 
@@ -60,6 +66,19 @@ type Project {
   employees: [Employee]
 }
 
+input ProjectCreationPayload {
+  name: String!
+  contact_person: String!
+  contact_email: String!
+}
+
+input ProjectUpdatingPayload {
+  name: String
+  contact_person: String
+  contact_email: String
+  isActive: Boolean
+}
+
 enum ProjectFilters {
   active
   inactive
@@ -77,11 +96,15 @@ type Query {
 }
 
 type Mutation {
-  addPosition(position_name: String!, salary_limit: Int!, head: ID): Position!
-  updatePosition(id: ID!, updatedData: PositionPayload!): Position!
+  addPosition(position: PositionCreationPayload!): Position!
+  updatePosition(id: ID!, updatedData: PositionUpdatingPayload!): Position!
   deletePosition(id: ID!): Boolean!
 
   addEmployee(employee: EmployeeCreationPayload!): Employee!
   updateEmployee(id: ID!, updatedData: EmployeeUpdatingPayload!): Employee!
   deleteEmployee(id: ID!): Boolean!
+
+  addProject(project: ProjectCreationPayload!): Project!
+  updateProject(id: ID!, updatedData: ProjectUpdatingPayload!): Project!
+  deleteProject(id: ID!): Boolean!
 }
