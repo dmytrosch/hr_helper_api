@@ -15,3 +15,11 @@ export const formatDate = (date) => {
 
   return formattedDate
 }
+
+export const prepareIntegerId = (id) => {
+  const idNumber = Number(id)
+  if (isNaN(idNumber)) {
+    throw new InvalidParamError(`Id param has to be a numeric value`)
+  }
+  return idNumber
+}

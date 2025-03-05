@@ -1,0 +1,110 @@
+type Position {
+  id: ID
+  position_name: String
+  salary_limit: Int
+  total_employees: Int
+  head: Employee
+  employees: [Employee]
+}
+
+input PositionUpdatingPayload {
+  position_name: String
+  salary_limit: Int
+  head: ID
+}
+
+input PositionCreationPayload {
+  position_name: String!
+  salary_limit: Int!
+  head: ID
+}
+
+type Employee {
+  id: ID
+  first_name: String
+  last_name: String
+  email: String
+  phone: String
+  city: String
+  birthday: String
+  position: Position
+  join_date: String
+  project: Project
+  headOfPositions: [Position]
+}
+
+input EmployeeCreationPayload {
+  first_name: String!
+  last_name: String!
+  email: String!
+  phone: String!
+  city: String!
+  birthday: String!
+  position: ID!
+  join_date: String
+  project: ID
+}
+
+input EmployeeUpdatingPayload {
+  first_name: String
+  last_name: String
+  email: String
+  phone: String
+  city: String
+  birthday: String
+  position: ID
+  join_date: String
+  project: ID
+}
+
+type Project {
+  id: ID
+  name: String
+  contact_person: String
+  contact_email: String
+  isActive: Boolean
+  employees: [Employee]
+}
+
+input ProjectCreationPayload {
+  name: String!
+  contact_person: String!
+  contact_email: String!
+}
+
+input ProjectUpdatingPayload {
+  name: String
+  contact_person: String
+  contact_email: String
+  isActive: Boolean
+}
+
+enum ProjectFilters {
+  active
+  inactive
+}
+
+type Query {
+  positions: [Position!]
+  position(id: ID!): Position
+
+  employees: [Employee!]
+  employee(id: ID!): Employee
+
+  projects(filter: ProjectFilters): [Project!]
+  project(id: ID!): Project
+}
+
+type Mutation {
+  addPosition(position: PositionCreationPayload!): Position!
+  updatePosition(id: ID!, updatedData: PositionUpdatingPayload!): Position!
+  deletePosition(id: ID!): Boolean!
+
+  addEmployee(employee: EmployeeCreationPayload!): Employee!
+  updateEmployee(id: ID!, updatedData: EmployeeUpdatingPayload!): Employee!
+  deleteEmployee(id: ID!): Boolean!
+
+  addProject(project: ProjectCreationPayload!): Project!
+  updateProject(id: ID!, updatedData: ProjectUpdatingPayload!): Project!
+  deleteProject(id: ID!): Boolean!
+}
